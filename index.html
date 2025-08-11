@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipping Card Memory Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="loading">
+    <div class="loader-layer">
+        <div class="loader">
+            <img src="https://iili.io/FvCQbdF.md.png" class="loader-logo">
+            <div class="bar">
+                <div class="bar-progress"></div>
+            </div>
+            <div class="tips">Loading Memory Game...</div>
+            <div class="tip-subtext">Get ready to match the cards!</div>
+        </div>
+    </div>
+    <section class="game-section">
+        <h2>Memory Game</h2>
+        <div id="difficultySelection" class="difficulty-selection">
+            <h3>Choose Difficulty</h3>
+            <button id="easyButton" class="difficulty-button">Easy (90s)</button>
+            <button id="mediumButton" class="difficulty-button">Medium (60s)</button>
+            <button id="hardButton" class="difficulty-button">Hard (30s)</button>
+        </div>
+        <button id="startButton" class="start-button" style="display: none;">Start Game</button>
+        <div class="game-board" id="gameBoard" style="display: none;"></div>
+        <div id="status" style="display: none;">Matches found: 0 / 8</div>
+        <div id="timer" style="display: none;">Time remaining: 90s</div>
+        <div class="button-container">
+            <button id="backButton" class="start-button" style="display: none;">Back</button>
+            <button id="tryAgainButton" class="start-button" style="display: none;">Try Again</button>
+        </div>
+    </section>
+    <script src="script.js"></script>
+</body>
+</html>
