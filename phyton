@@ -1,0 +1,81 @@
+import pygame
+import sys
+
+# Initialize Pygame
+pygame.init()
+
+# Screen dimensions
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption("Pygame Flipping Card Demo")
+
+# Colors
+WHITE = (255, 255, 255)
+BLUE = (0, 0, 255)
+GREEN = (0, 255, 0)
+
+# Card properties
+card_width = 200
+card_height = 300
+card_x = (SCREEN_WIDTH - card_width) // 2
+card_y = (SCREEN_HEIGHT - card_height) // 2
+
+# Flipping state
+flipped = False
+flip_progress = 0
+flip_speed = 10  # Higher for slower flip
+
+# Fonts
+font = pygame.font.Font(None, 74)
+
+def draw_card(front=True):
+    if front:
+        pygame.draw.rect(screen, GREEN, (card_x, card_y, card_width, card_height))
+        text = font.render("Front", True, WHITE)
+        screen.blit(text, (card_x + 30, card_y + 100))
+    else:
+        pygame.draw.rect(screen, BLUE, (card_x, card_y, card_width, card_height))
+        text = font.render("?", True, WHITE)
+        screen.blit(text, (card_x + 70, card_y + 100))
+
+# Main loop
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            # Check if click on card
+            mouse_x, mouse_y = event.pos
+            if card_x <= mouse_x <= card_x + card_width and card_y <= mouse_y <= card_y + card_height:
+                if flip_progress == 0:
+                    flip_progress = 1  # Start flipping
+
+    screen.fill(WHITE)
+
+    if flip_progress > 0:
+        # Simulate flip by scaling width
+        current_width = card_width * (1 - flip_progress / 180)
+        if current_width < 0:
+            current_width = 0
+        adj_x = card_x + (card_width - current_width) / 2
+
+        if flip_progress <= 90:
+            # Flipping to front
+            pygame.draw.rect(screen, BLUE, (adj_x, card_y, current_width, card_height))
+        else:
+            # Flipping to back
+            pygame.draw.rect(screen, GREEN, (adj_x, card_y, current_width, card_height))
+
+        flip_progress += flip_speed
+        if flip_progress >= 180:
+            flip_progress = 0
+            flipped = not flipped
+    else:
+        draw_card(flipped)
+
+    pygame.display.flip()
+
+pygame.quit()
+sys.exit()
